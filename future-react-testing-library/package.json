@@ -1,0 +1,21 @@
+{
+  "name": "@matthamlin/react-testing-library",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "Matthew Hamlin <hamlim@outlook.com> (https://matthamlin.me/)",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "7.2.3",
+    "@babel/core": "7.2.2",
+    "@babel/preset-env": "7.2.3"
+  },
+  "dependencies": {
+    "dom-testing-library": "3.16.1"
+  },
+  "peerDependencies": {
+    "@matthamlin/danger-react-suspense": "latest"
+  },
+  "scripts": {
+    "build": "babel src/ --out-dir dist/"
+  }
+}

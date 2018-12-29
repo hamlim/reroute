@@ -20,7 +20,7 @@
     "test": "jest"
   },
   "name": "@reroute/browser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "author": "Matthew Hamlin <hamlim@outlook.com> (https://matthamlin.me/)",
   "license": "MIT",

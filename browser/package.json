@@ -1,0 +1,32 @@
+{
+  "devDependencies": {
+    "@babel/cli": "7.2.3",
+    "@babel/core": "7.2.2",
+    "@babel/plugin-proposal-object-rest-spread": "7.2.0",
+    "@babel/preset-env": "7.2.3",
+    "@babel/preset-react": "7.0.0",
+    "@matthamlin/danger-react-suspense": "2.0.0",
+    "@matthamlin/react-testing-library": "1.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "23.6.0",
+    "jest": "23.6.0",
+    "jest-dom": "latest"
+  },
+  "peerDependencies": {
+    "@matthamlin/danger-react-suspense": "2.0.0"
+  },
+  "scripts": {
+    "build": "babel src/ --out-dir dist/ --ignore=__tests__",
+    "test": "jest"
+  },
+  "name": "@reroute/browser",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "author": "Matthew Hamlin <hamlim@outlook.com> (https://matthamlin.me/)",
+  "license": "MIT",
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  }
+}

@@ -3,8 +3,13 @@ import React, {
   useState,
   useRef,
   useEffect,
+  useReducer,
+  useCallback,
+  memo,
 } from '@matthamlin/danger-react-suspense/dev/react.js'
 import { routerContext, defaultValue } from './context.js'
+import { INIT_ACTION, historyReducer, NAVIGATE } from './history.js'
+import { canAccessDOM } from './utils.js'
 
 // <Router value={{ history: myOwnHistory }}>
 //   <Router> // has myOwnHistory
@@ -12,33 +17,35 @@ import { routerContext, defaultValue } from './context.js'
 //   </Router>
 // </Router>
 
-export function Router(props) {
-  let providedContext = useContext(routerContext)
-
-  let ctx
-
-  if (providedContext === defaultValue) {
-    ctx = defaultValue
-  } else {
-    ctx = providedContext
+export function useRouter(config) {
+  let [history, dispatch] = useReducer(historyReducer, {}, { type: INIT_ACTION, payload: config })
+  function navigate(to) {
+    dispatch({ type: NAVIGATE, payload: { location: to } })
   }
-
-  let [ctxState, setState] = useState(ctx)
-  let updateRef = useRef(null)
-
-  if (updateRef.current === null) {
-    setState({
-      ...ctxState,
-      history: {
-        ...ctxState.history,
-        navigateTo(path) {
-          ctxState.history.navigateTo(path)
-          setState(s => ({ ...s }))
-        },
-      },
-    })
-    updateRef.current = true
-  }
-
-  return <routerContext.Provider value={ctxState} {...props} />
+  return [history, navigate, dispatch]
 }
+
+function performSideEffects(location) {
+  if (canAccessDOM()) {
+    if (typeof window.history !== 'undefined' && typeof window.history.pushState === 'function') {
+      window.history.pushState(null, null, location)
+    }
+  }
+}
+
+export const Router = memo(function Router(props) {
+  let [history, navigate] = useRouter()
+  let providedCtx = useContext(routerContext)
+
+  if (providedCtx.isInitial) {
+    providedCtx = { ...history, navigate }
+  }
+
+  const locationRef = useRef(providedCtx.location)
+
+  if (locationRef.current !== history.location) {
+    performSideEffects(history.location)
+  }
+
+  if (locationRef) return <routerContext.Provider value={providedCtx} {...props} />
+})

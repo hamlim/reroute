@@ -1,21 +1,22 @@
 import React, { useContext } from '@matthamlin/danger-react-suspense/dev/react.js'
 import { routerContext } from './context.js'
+import { applyToAll } from './utils.js'
 
 function defaultGetProps(props) {
   return props
 }
 
-export function Link({ to, Element = 'a', getProps = defaultGetProps, ...rest } = {}) {
-  const { history } = useContext(routerContext)
+export function Link({ to, getProps = defaultGetProps, ...rest } = {}) {
+  const { navigate } = useContext(routerContext)
   return (
-    <Element
+    <a
       {...getProps({
         ...rest,
         href: to,
-        onClick: event => {
+        onClick: applyToAll(event => {
           event.preventDefault()
-          history.navigateTo(to)
-        },
+          navigate(to)
+        }, rest.onClick),
       })}
     />
   )

@@ -1,5 +1,5 @@
 import React from '@matthamlin/danger-react-suspense/dev/react.js'
-import { render, cleanup, fireEvent } from '@matthamlin/react-testing-library'
+import { render, cleanup, fireEvent } from '../../danger-react-testing-library/index.js'
 import { Route, Router, Link } from '../index.js'
 import 'jest-dom/extend-expect'
 
@@ -10,9 +10,7 @@ test('renders children when the path matches', () => {
     <Router
       value={{
         history: {
-          location() {
-            return { path: '/hello' }
-          },
+          location: '/hello',
         },
       }}
     >
@@ -23,10 +21,10 @@ test('renders children when the path matches', () => {
   getByText('Hello')
 })
 
-test('Link calls history.navigateTo when clicked', () => {
-  const navigateTo = jest.fn()
+test('Link calls navigate when clicked', () => {
+  const navigate = jest.fn()
   const { container, getByText, getByTestId } = render(
-    <Router value={{ history: { navigateTo } }}>
+    <Router value={{ history: {}, navigate }}>
       <Link to="/yo" getProps={props => ({ ...props, 'data-testid': 'test-link' })}>
         Testing
       </Link>
@@ -35,5 +33,5 @@ test('Link calls history.navigateTo when clicked', () => {
 
   fireEvent.click(getByTestId('test-link'))
 
-  expect(navigateTo).toHaveBeenCalled()
+  expect(navigate).toHaveBeenCalled()
 })

@@ -1,5 +1,5 @@
 import React from '@matthamlin/danger-react-suspense/dev/react.js'
-import { render, cleanup, fireEvent } from '../../danger-react-testing-library/index.js'
+import { render, cleanup, fireEvent } from '@matthamlin/react-testing-library'
 import { Route, Router, Link } from '../index.js'
 import 'jest-dom/extend-expect'
 

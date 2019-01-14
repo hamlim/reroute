@@ -8,12 +8,14 @@ import { Router, Route, Link } from '@reroute/browser'
 render(
   <Router>
     <Route path="/hello-world">
-      {() => (
-        <div>
-          <marquee>Hello World!</marquee>
-          <Link to="/">Go Back</Link>
-        </div>
-      )}
+      {({ matches }) =>
+        matches && (
+          <div>
+            <marquee>Hello World!</marquee>
+            <Link to="/">Go Back</Link>
+          </div>
+        )
+      }
     </Route>
     <Link to="/hello-world">Go to Greeting</Link>
   </Router>,

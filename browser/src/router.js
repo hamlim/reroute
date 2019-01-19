@@ -6,7 +6,7 @@ import React, {
   useReducer,
   useCallback,
   memo,
-} from '@matthamlin/danger-react-suspense/dev/react.js'
+} from 'https://unpkg.com/@matthamlin/react@1.0.5/danger/react.js'
 import { routerContext, defaultValue } from './context.js'
 import { INIT_ACTION, historyReducer, NAVIGATE } from './history.js'
 import { canAccessDOM } from './utils.js'

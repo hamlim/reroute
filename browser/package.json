@@ -10,20 +10,23 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "23.6.0",
     "jest": "23.6.0",
-    "jest-dom": "latest"
+    "jest-dom": "latest",
+    "microbundle": "0.9.0"
   },
   "peerDependencies": {
     "@matthamlin/danger-react-suspense": "2.0.0"
   },
   "scripts": {
     "build": "babel src/ --out-dir dist/ --ignore=__tests__",
-    "test": "jest"
+    "test": "jest",
+    "bundle": "microbundle --external https://unpkg.com/@matthamlin/react@1.0.5/danger/react.js"
   },
   "name": "@reroute/browser",
   "version": "0.0.6",
-  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "author": "Matthew Hamlin <hamlim@outlook.com> (https://matthamlin.me/)",
   "license": "MIT",
+  "source": "./src/index.js",
   "jest": {
     "transform": {
       "^.+\\.js$": "babel-jest"

@@ -22,7 +22,7 @@
     "bundle": "microbundle --external https://unpkg.com/@matthamlin/react@1.0.5/danger/react.js --format es && cp ./dist/browser.mjs ./dist/index.mjs"
   },
   "name": "@reroute/browser",
-  "version": "0.0.6",
+  "version": "0.0.10",
   "module": "dist/index.mjs",
   "author": "Matthew Hamlin <hamlim@outlook.com> (https://matthamlin.me/)",
   "license": "MIT",

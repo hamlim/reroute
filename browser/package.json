@@ -19,7 +19,7 @@
   "scripts": {
     "build": "babel src/ --out-dir dist/ --ignore=__tests__",
     "test": "jest",
-    "bundle": "microbundle --external https://unpkg.com/@matthamlin/react@1.0.5/danger/react.js"
+    "bundle": "microbundle --external https://unpkg.com/@matthamlin/react@1.0.5/danger/react.js && cp ./dist/browser.mjs ./dist/index.mjs"
   },
   "name": "@reroute/browser",
   "version": "0.0.6",

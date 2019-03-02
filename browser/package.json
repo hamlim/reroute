@@ -5,25 +5,29 @@
     "@babel/plugin-proposal-object-rest-spread": "7.2.0",
     "@babel/preset-env": "7.2.3",
     "@babel/preset-react": "7.0.0",
-    "@matthamlin/danger-react-suspense": "2.0.0",
     "@matthamlin/react-testing-library": "1.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "23.6.0",
     "jest": "23.6.0",
     "jest-dom": "latest",
-    "microbundle": "0.9.0"
+    "microbundle": "0.9.0",
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
+    "react-testing-library": "6.0.0"
   },
   "peerDependencies": {
-    "@matthamlin/danger-react-suspense": "2.0.0"
+    "react": "16.8.3"
   },
   "scripts": {
     "build": "babel src/ --out-dir dist/ --ignore=__tests__",
     "test": "jest",
-    "bundle": "microbundle --external https://unpkg.com/@matthamlin/react@1.0.5/danger/react.js --format es && cp ./dist/browser.mjs ./dist/index.mjs"
+    "bundle": "microbundle --jsx React.createElement"
   },
   "name": "@reroute/browser",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "umd:main": "dist/foo.umd.js",
   "author": "Matthew Hamlin <hamlim@outlook.com> (https://matthamlin.me/)",
   "license": "MIT",
   "source": "./src/index.js",

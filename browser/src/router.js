@@ -6,7 +6,7 @@ import React, {
   useReducer,
   useCallback,
   memo,
-} from 'https://unpkg.com/@matthamlin/react@1.0.5/danger/react.js'
+} from 'react'
 import { routerContext, defaultValue } from './context.js'
 import { INIT_ACTION, historyReducer, NAVIGATE } from './history.js'
 import { canAccessDOM } from './utils.js'
@@ -17,20 +17,21 @@ import { canAccessDOM } from './utils.js'
 //   </Router>
 // </Router>
 
-export function useRouter(config) {
-  let [history, dispatch] = useReducer(historyReducer, {}, { type: INIT_ACTION, payload: config })
-  function navigate(to) {
-    dispatch({ type: NAVIGATE, payload: { location: to } })
+function init(config) {
+  return function() {
+    return historyReducer(undefined, { type: INIT_ACTION, payload: config })
   }
-  return [history, navigate, dispatch]
 }
 
-function performSideEffects(location) {
-  if (canAccessDOM()) {
-    if (typeof window.history !== 'undefined' && typeof window.history.pushState === 'function') {
-      window.history.pushState(null, null, location)
-    }
-  }
+export function useRouter(config) {
+  let [history, dispatch] = useReducer(historyReducer, {}, init(config))
+  const navigate = useCallback(
+    function navigate(to) {
+      dispatch({ type: NAVIGATE, payload: { location: to } })
+    },
+    [dispatch],
+  )
+  return [history, navigate, dispatch]
 }
 
 export const Router = memo(function Router(props) {
@@ -41,11 +42,13 @@ export const Router = memo(function Router(props) {
     providedCtx = { ...history, navigate }
   }
 
-  const locationRef = useRef(providedCtx.location)
+  useEffect(() => {
+    if (canAccessDOM()) {
+      if (typeof window.history !== 'undefined' && typeof window.history.pushState === 'function') {
+        window.history.pushState(null, null, history.location)
+      }
+    }
+  }, [history.location])
 
-  if (locationRef.current !== history.location) {
-    performSideEffects(history.location)
-  }
-
-  if (locationRef) return <routerContext.Provider value={providedCtx} {...props} />
+  return <routerContext.Provider value={providedCtx} {...props} />
 })

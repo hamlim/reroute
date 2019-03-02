@@ -1,4 +1,4 @@
-import { createContext } from 'https://unpkg.com/@matthamlin/react@1.0.5/danger/react.js'
+import { createContext } from 'react'
 import { makeInitialHistory } from './history.js'
 
 export function createRouterContext(defaultValue) {

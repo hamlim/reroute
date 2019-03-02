@@ -1,4 +1,4 @@
-import React, { useContext } from 'https://unpkg.com/@matthamlin/react@1.0.5/danger/react.js'
+import React, { useContext } from 'react'
 import { routerContext } from './context.js'
 import { applyToAll } from './utils.js'
 

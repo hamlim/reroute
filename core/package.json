@@ -1,0 +1,34 @@
+{
+  "name": "@reroute/core",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Matthew Hamlin <hamlim@outlook.com> (https://matthamlin.me/)",
+  "license": "MIT",
+  "dependencies": {
+    "history": "4.9.0"
+  },
+  "scripts": {
+    "build": "babel src/ --out-dir dist/ --ignore=__tests__",
+    "test": "jest",
+    "bundle": "microbundle --jsx React.createElement"
+  },
+  "peerDependencies": {
+    "react": "16.8.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.4.3",
+    "@babel/core": "7.4.3",
+    "@babel/preset-env": "7.4.3",
+    "@babel/preset-react": "7.0.0",
+    "jest": "24.7.1",
+    "microbundle": "0.9.0",
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
+    "react-testing-library": "6.0.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  }
+}

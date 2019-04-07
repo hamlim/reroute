@@ -76,10 +76,10 @@ test('useLink supports disabled links', () => {
 })
 
 test('useRoute determines if it matches the provided path', () => {
-  let matches
+  let match
   function Foo() {
-    let { matches: _matches } = useRoute('/')
-    matches = _matches
+    let { match: _match } = useRoute('/')
+    match = _match
 
     return null
   }
@@ -90,15 +90,15 @@ test('useRoute determines if it matches the provided path', () => {
     </Router>,
   )
 
-  expect(matches).toBe(true)
+  expect(match).toBe(true)
 })
 
 test('useRoute does not match for a different route', () => {
-  let matches
+  let match
   function Foo() {
-    let { matches: _matches } = useRoute('/some-path-here')
+    let { match: _match } = useRoute('/some-path-here')
 
-    matches = _matches
+    match = _match
 
     return null
   }
@@ -108,5 +108,5 @@ test('useRoute does not match for a different route', () => {
     </Router>,
   )
 
-  expect(matches).toBe(false)
+  expect(match).toBe(false)
 })

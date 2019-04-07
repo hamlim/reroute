@@ -1,7 +1,10 @@
 {
   "name": "@reroute/core",
   "version": "1.0.0",
-  "main": "index.js",
+  "source": "src/mod.js",
+  "main": "dist/mod.js",
+  "module": "dist/mod.mjs",
+  "unpkg": "dist/mod.umd.js",
   "author": "Matthew Hamlin <hamlim@outlook.com> (https://matthamlin.me/)",
   "license": "MIT",
   "dependencies": {
@@ -13,7 +16,8 @@
     "bundle": "microbundle --jsx React.createElement"
   },
   "peerDependencies": {
-    "react": "16.8.3"
+    "react": "16.8.3",
+    "history": "4.9.0"
   },
   "devDependencies": {
     "@babel/cli": "7.4.3",

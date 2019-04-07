@@ -1,31 +1,40 @@
-import React, { createContext, useContext, useState, useLayoutEffect, useRef } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useLayoutEffect,
+  useRef,
+  useCallback,
+} from 'react'
 
 import { createBrowserHistory } from 'history'
 
-let browserHistory = createBrowserHistory()
-
-let historyContext = createContext(browserHistory)
+let historyContext = createContext({
+  history: null,
+  location: null,
+})
 
 // exports
 
 export function Router({ children }) {
-  let [location, setLocation] = useState(browserHistory.location)
+  let { current: history } = useLazyRef(createBrowserHistory)
+  let [location, setLocation] = useState(history.location)
 
   let { current: listener } = useClientSideRef(() => {
-    return browserHistory.listen(location => {
+    return history.listen(location => {
       setLocation(location)
     })
   })
 
   useClientSideLayoutEffect(() => {
-    return listener
+    return () => {
+      if (typeof listener === 'function') {
+        listener()
+      }
+    }
   }, [])
 
-  return (
-    <historyContext.Provider value={{ history: browserHistory, location }}>
-      {children}
-    </historyContext.Provider>
-  )
+  return <historyContext.Provider value={{ history, location }}>{children}</historyContext.Provider>
 }
 
 export function useHistory() {
@@ -34,13 +43,16 @@ export function useHistory() {
 
 export function useLink(path, state) {
   let { history } = useHistory()
-  function linkClick(event) {
-    if (event.defaultPrevented) {
-      return
-    }
-    event.preventDefault()
-    history.push(path, state)
-  }
+  let linkClick = useCallback(
+    function linkClick(event) {
+      if (event.defaultPrevented) {
+        return
+      }
+      event.preventDefault()
+      history.push(path, state)
+    },
+    [history],
+  )
 
   return function getProps(props = {}) {
     let handler = applyToAll(props.onClick, linkClick)
@@ -77,7 +89,7 @@ function useLazyRef(initializer) {
 }
 
 function useClientSideLayoutEffect(cb, deps) {
-  let effect = typeof window !== 'undefined' ? useLayoutEffect : () => {}
+  let effect = typeof window !== 'undefined' ? useLayoutEffect : noop
   effect(cb, deps)
 }
 

@@ -1,13 +1,6 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useLayoutEffect,
-  useRef,
-  useCallback,
-} from 'react'
+import React from 'react'
 
-import { createBrowserHistory } from 'history'
+const { createContext, useContext, useState, useMemo, useLayoutEffect, useRef, useCallback } = React
 
 let historyContext = createContext({
   history: null,
@@ -16,8 +9,11 @@ let historyContext = createContext({
 
 // exports
 
-export function Router({ children }) {
-  let { current: history } = useLazyRef(createBrowserHistory)
+export function Router({ children, createHistory }) {
+  if (typeof createHistory !== 'function') {
+    throw new Error('createHistory prop was either not provided, or is not a function.')
+  }
+  let { current: history } = useLazyRef(createHistory)
   let [location, setLocation] = useState(history.location)
 
   let { current: listener } = useClientSideRef(() => {
@@ -34,7 +30,15 @@ export function Router({ children }) {
     }
   }, [])
 
-  return <historyContext.Provider value={{ history, location }}>{children}</historyContext.Provider>
+  let contextValue = useMemo(
+    () => ({
+      history,
+      location,
+    }),
+    [location],
+  )
+
+  return <historyContext.Provider value={contextValue}>{children}</historyContext.Provider>
 }
 
 export function useHistory() {

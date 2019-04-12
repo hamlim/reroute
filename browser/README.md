@@ -1,15 +1,19 @@
-# reroute
+# Reroute Browser
 
-A quick and dirty browser router implementation using React.createContext.
+A collection of routing components and hooks for composing web react applications.
+
+## API
 
 ```jsx
-import { Router, Route, Link } from '@reroute/browser'
+import { BrowserRoute, Route, Link, useLink, useRoute } from '@reroute/browser'
+
+// useLink and useRoute are the same exports from '@reroute/core'
 
 render(
-  <Router>
+  <BrowserRoute>
     <Route path="/hello-world">
-      {({ matches }) =>
-        matches && (
+      {({ match }) =>
+        match && (
           <div>
             <marquee>Hello World!</marquee>
             <Link to="/">Go Back</Link>
@@ -18,18 +22,6 @@ render(
       }
     </Route>
     <Link to="/hello-world">Go to Greeting</Link>
-  </Router>,
+  </BrowserRoute>,
 )
 ```
-
-## TODO:
-
-- [ ] monorepo setup with lerna possibly?
-  - [ ] @reroute/server
-  - [ ] @reroute/native
-  - [ ] more???
-- [ ] Unit tests
-- [ ] Demos
-- [ ] `<SimpleRoute path="some-path">`
-- [ ] capture groups maybe?
-  - [ ] `path="/some-route/:id"`

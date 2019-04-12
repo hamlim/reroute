@@ -2,6 +2,7 @@ import React from 'react'
 import { render, cleanup } from 'react-testing-library'
 
 import { useHistory, useLink, useRoute, Router } from '../mod.js'
+import { createMemoryHistory } from 'history'
 
 afterEach(cleanup)
 
@@ -13,7 +14,7 @@ test('it gives you the history', () => {
   }
 
   render(
-    <Router>
+    <Router createHistory={createMemoryHistory}>
       <Foo />
     </Router>,
   )
@@ -28,7 +29,7 @@ test('useLink provides a function to get link props', () => {
     return null
   }
   render(
-    <Router>
+    <Router createHistory={createMemoryHistory}>
       <Foo />
     </Router>,
   )
@@ -47,7 +48,7 @@ test('calling the result of useLink provides the correct role', () => {
   }
 
   let { queryByTestId } = render(
-    <Router>
+    <Router createHistory={createMemoryHistory}>
       <Foo />
     </Router>,
   )
@@ -67,7 +68,7 @@ test('useLink supports disabled links', () => {
   }
 
   let { queryByTestId } = render(
-    <Router>
+    <Router createHistory={createMemoryHistory}>
       <Foo />
     </Router>,
   )
@@ -85,7 +86,7 @@ test('useRoute determines if it matches the provided path', () => {
   }
 
   render(
-    <Router>
+    <Router createHistory={createMemoryHistory}>
       <Foo />
     </Router>,
   )
@@ -103,10 +104,38 @@ test('useRoute does not match for a different route', () => {
     return null
   }
   render(
-    <Router>
+    <Router createHistory={createMemoryHistory}>
       <Foo />
     </Router>,
   )
 
   expect(match).toBe(false)
+})
+
+// Workaround react bug, see: https://github.com/facebook/react/issues/12485
+const pauseErrorLogging = codeToRun => {
+  const logger = console.error
+  console.error = () => {}
+
+  codeToRun()
+
+  console.error = logger
+}
+
+test('Router throws when no createHistory is provided, or its not a function', () => {
+  pauseErrorLogging(() =>
+    expect(() => {
+      render(<Router />)
+    }).toThrowErrorMatchingInlineSnapshot(
+      `"createHistory prop was either not provided, or is not a function."`,
+    ),
+  )
+
+  pauseErrorLogging(() =>
+    expect(() => {
+      render(<Router createHistory={null} />)
+    }).toThrowErrorMatchingInlineSnapshot(
+      `"createHistory prop was either not provided, or is not a function."`,
+    ),
+  )
 })

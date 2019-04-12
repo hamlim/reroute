@@ -1,4 +1,4 @@
-# Reroute Core package
+# Reroute Core
 
 This package maintains the core hooks for the Reroute library.
 

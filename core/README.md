@@ -2,8 +2,7 @@
 
 This package maintains the core hooks for the Reroute library.
 
-These can be manually consumed within feature applications, or they can be consumed through the
-(upcoming) `@reroute/browser` package via common components like `Link` and `Route`.
+These can be manually consumed within feature applications, or they can be consumed through the [`@reroute/browser`](https://github.com/hamlim/reroute/tree/master/browser) package via common components like `Link` and `Route`.
 
 ## API
 

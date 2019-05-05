@@ -59,10 +59,10 @@ custom Router component.
 
 If you want more control over the current Router state, for example mounting your application during
 a test at a nested pathname, then you can use the `<Router>` from `@reroute/core` and provide it a
-function to it's `createHistory` prop.
+function to it's `createHistory` prop. Here we are using the `createMemoryHistory` function from the
+`history` module on NPM.
 
 ```jsx
-// one suggestion is to use the `create*History` APIs from the `history` module from NPM
 import { createMemoryHistory } from 'history'
 import { Router } from '@reroute/core'
 

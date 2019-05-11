@@ -1,6 +1,14 @@
 import React from 'react'
 
-const { createContext, useContext, useState, useMemo, useLayoutEffect, useRef, useCallback } = React
+const {
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  useLayoutEffect,
+  useRef,
+  useCallback,
+} = React
 
 let historyContext = createContext({
   history: null,
@@ -11,7 +19,9 @@ let historyContext = createContext({
 
 export function Router({ children, createHistory }) {
   if (typeof createHistory !== 'function') {
-    throw new Error('createHistory prop was either not provided, or is not a function.')
+    throw new Error(
+      'createHistory prop was either not provided, or is not a function.',
+    )
   }
   let { current: history } = useLazyRef(createHistory)
   let [location, setLocation] = useState(history.location)
@@ -38,7 +48,11 @@ export function Router({ children, createHistory }) {
     [location],
   )
 
-  return <historyContext.Provider value={contextValue}>{children}</historyContext.Provider>
+  return (
+    <historyContext.Provider value={contextValue}>
+      {children}
+    </historyContext.Provider>
+  )
 }
 
 export function useHistory() {

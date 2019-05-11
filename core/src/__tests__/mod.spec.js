@@ -139,3 +139,21 @@ test('Router throws when no createHistory is provided, or its not a function', (
     ),
   )
 })
+
+test('useLink`s linkClick callback throws when no history is provided within context', () => {
+  let clickHandler
+  function Link() {
+    let getLinkProps = useLink('/foo')
+    let { onClick, ...rest } = getLinkProps()
+    clickHandler = onClick
+    return null
+  }
+  render(<Link />)
+
+  expect(() => clickHandler({ defaultPrevented: false, preventDefault() {} }))
+    .toThrowErrorMatchingInlineSnapshot(`
+"Link attempted to route to path: '/foo' but no history was found in context.
+
+Check to ensure the link is rendered within a Router."
+`)
+})

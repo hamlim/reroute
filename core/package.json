@@ -1,6 +1,6 @@
 {
   "name": "@reroute/core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "source": "src/mod.js",
   "main": "dist/mod.js",
   "module": "dist/mod.mjs",

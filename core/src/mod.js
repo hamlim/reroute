@@ -53,6 +53,11 @@ export function useLink(path, state) {
         return
       }
       event.preventDefault()
+      if (history === null || history === undefined) {
+        throw new Error(`Link attempted to route to path: '${path}' but no history was found in context.
+
+Check to ensure the link is rendered within a Router.`)
+      }
       history.push(path, state)
     },
     [history],

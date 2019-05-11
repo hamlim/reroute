@@ -1,4 +1,12 @@
 {
+  "name": "@reroute/browser",
+  "version": "1.0.3",
+  "module": "dist/mod.mjs",
+  "main": "dist/mod.js",
+  "umd:main": "dist/foo.umd.js",
+  "author": "Matthew Hamlin <hamlim@outlook.com> (https://matthamlin.me/)",
+  "license": "MIT",
+  "source": "./src/mod.js",
   "devDependencies": {
     "@babel/cli": "7.4.3",
     "@babel/core": "7.4.3",
@@ -15,19 +23,12 @@
     "react-testing-library": "6.0.0"
   },
   "peerDependencies": {
-    "react": "16.8.3"
+    "react": "16.8.3",
+    "@reroute/core": "*"
   },
   "scripts": {
     "build": "babel src/ --out-dir dist/ --ignore=__tests__",
     "test": "jest",
     "bundle": "microbundle --jsx React.createElement"
-  },
-  "name": "@reroute/browser",
-  "version": "1.0.2",
-  "module": "dist/mod.mjs",
-  "main": "dist/mod.js",
-  "umd:main": "dist/foo.umd.js",
-  "author": "Matthew Hamlin <hamlim@outlook.com> (https://matthamlin.me/)",
-  "license": "MIT",
-  "source": "./src/mod.js"
+  }
 }

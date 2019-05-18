@@ -1,6 +1,6 @@
 {
   "name": "@reroute/browser",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "module": "dist/mod.mjs",
   "main": "dist/mod.js",
   "umd:main": "dist/foo.umd.js",
@@ -10,21 +10,21 @@
   "devDependencies": {
     "@babel/cli": "7.4.3",
     "@babel/core": "7.4.3",
+    "@babel/plugin-proposal-object-rest-spread": "7.2.0",
     "@babel/preset-env": "7.4.3",
     "@babel/preset-react": "7.0.0",
+    "@reroute/core": "*",
+    "history": "4.9.0",
     "jest": "24.7.1",
-    "@babel/plugin-proposal-object-rest-spread": "7.2.0",
     "jest-dom": "latest",
     "microbundle": "0.9.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
-    "@reroute/core": "*",
-    "history": "4.9.0",
     "react-testing-library": "6.0.0"
   },
   "peerDependencies": {
-    "react": "16.8.3",
-    "@reroute/core": "*"
+    "@reroute/core": "*",
+    "react": "16.8.3"
   },
   "scripts": {
     "build": "babel src/ --out-dir dist/ --ignore=__tests__",

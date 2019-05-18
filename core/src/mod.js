@@ -83,9 +83,9 @@ Check to ensure the link is rendered within a Router.`)
       ...props,
       href: path,
       role: props.disabled ? 'presentation' : 'anchor',
-      onClick: props.disabled ? noop : handler,
-      onKeyDown: props.disabled ? noop : keyDown(handler),
-      onKeyUp: props.disabled ? noop : keyUp(handler),
+      onClick: handler,
+      onKeyDown: keyDown(handler),
+      onKeyUp: keyUp(handler),
       tabIndex: props.disabled ? '-1' : '0',
     }
   }

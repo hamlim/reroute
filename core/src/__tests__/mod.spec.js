@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'react-testing-library'
+import { render, cleanup, fireEvent } from 'react-testing-library'
 
 import { useHistory, useLink, useRoute, Router } from '../mod.js'
 import { createMemoryHistory } from 'history'
@@ -156,4 +156,22 @@ test('useLink`s linkClick callback throws when no history is provided within con
 
 Check to ensure the link is rendered within a Router."
 `)
+})
+
+test('link still calls the handler even if disabled', () => {
+  let clickHandler = jest.fn()
+  function Link() {
+    let getLinkProps = useLink('/foo')
+    return (
+      <a {...getLinkProps({ disabled: true, onClick: clickHandler })}>anchor</a>
+    )
+  }
+  let { container } = render(
+    <Router createHistory={createMemoryHistory}>
+      <Link />
+    </Router>,
+  )
+  let anchor = container.querySelector('a')
+  fireEvent.click(anchor)
+  expect(clickHandler).toHaveBeenCalled()
 })

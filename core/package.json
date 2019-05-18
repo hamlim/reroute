@@ -1,6 +1,6 @@
 {
   "name": "@reroute/core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "source": "src/mod.js",
   "main": "dist/mod.js",
   "module": "dist/mod.mjs",
@@ -16,11 +16,11 @@
     "react": "16.8.3"
   },
   "devDependencies": {
-    "history": "4.9.0",
     "@babel/cli": "7.4.3",
     "@babel/core": "7.4.3",
     "@babel/preset-env": "7.4.3",
     "@babel/preset-react": "7.0.0",
+    "history": "4.9.0",
     "jest": "24.7.1",
     "microbundle": "0.9.0",
     "prettier": "1.16.4",

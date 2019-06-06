@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, fireEvent } from 'react-testing-library'
+import { render, cleanup, fireEvent } from '@testing-library/react'
 
 import { useHistory, useLink, useRoute, Router } from '../mod.js'
 import { createMemoryHistory } from 'history'

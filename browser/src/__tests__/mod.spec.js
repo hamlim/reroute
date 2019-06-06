@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, fireEvent } from 'react-testing-library'
+import { render, cleanup, fireEvent } from '@testing-library/react'
 import { BrowserRouter, Link, Route } from '../mod.js'
 
 afterEach(cleanup)
@@ -47,7 +47,9 @@ test('it re-renders the route when a link is clicked', () => {
   let { container } = render(
     <BrowserRouter>
       <>
-        <Route path="/foo">{({ match }) => match && <span data-testid="foo">Foo</span>}</Route>
+        <Route path="/foo">
+          {({ match }) => match && <span data-testid="foo">Foo</span>}
+        </Route>
         <Link to="/foo">Go To Foo</Link>
       </>
     </BrowserRouter>,

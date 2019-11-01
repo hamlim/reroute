@@ -1,6 +1,6 @@
 {
   "name": "@reroute/core",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "source": "src/mod.js",
   "main": "dist/mod.js",
   "module": "dist/mod.mjs",
@@ -20,13 +20,13 @@
     "@babel/core": "7.4.5",
     "@babel/preset-env": "7.4.5",
     "@babel/preset-react": "7.0.0",
+    "@testing-library/react": "8.0.1",
     "history": "4.9.0",
     "jest": "24.8.0",
     "microbundle": "0.11.0",
     "prettier": "1.18.0",
     "react": "16.8.6",
-    "react-dom": "16.8.6",
-    "@testing-library/react": "8.0.1"
+    "react-dom": "16.8.6"
   },
   "jest": {
     "transform": {

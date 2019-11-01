@@ -1,6 +1,6 @@
 {
   "name": "@reroute/browser",
-  "version": "1.0.4",
+  "version": "2.0.1",
   "module": "dist/mod.mjs",
   "main": "dist/mod.js",
   "umd:main": "dist/foo.umd.js",
@@ -14,13 +14,13 @@
     "@babel/preset-env": "7.4.5",
     "@babel/preset-react": "7.0.0",
     "@reroute/core": "*",
+    "@testing-library/react": "8.0.1",
     "history": "4.9.0",
     "jest": "24.8.0",
     "jest-dom": "3.4.0",
     "microbundle": "0.11.0",
     "react": "16.8.6",
-    "react-dom": "16.8.6",
-    "@testing-library/react": "8.0.1"
+    "react-dom": "16.8.6"
   },
   "peerDependencies": {
     "@reroute/core": "*",

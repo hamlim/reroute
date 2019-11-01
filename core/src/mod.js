@@ -8,16 +8,48 @@ const {
   useLayoutEffect,
   useRef,
   useCallback,
+  useTransition: useReactTransition,
+  Children,
+  isValidElement,
+  cloneElement,
+  useEffect,
 } = React
 
 let historyContext = createContext({
   history: null,
   location: null,
+  isPending: false,
 })
+
+let useTransition
+
+if (typeof useReactTransition === 'function') {
+  useTransition = useReactTransition
+} else {
+  useTransition = function() {
+    let [val, setIsDone] = useState(0)
+    let callback = useRef(null)
+
+    useEffect(() => {
+      if (val === 1) {
+        callback.current()
+        setIsDone(2)
+      }
+    }, [val])
+
+    return [
+      cb => {
+        setIsDone(1)
+        callback.current = cb
+      },
+      val === 1,
+    ]
+  }
+}
 
 // exports
 
-export function Router({ children, createHistory }) {
+export function Router({ children, createHistory, timeoutMs = 2000 }) {
   if (typeof createHistory !== 'function') {
     throw new Error(
       'createHistory prop was either not provided, or is not a function.',
@@ -25,10 +57,13 @@ export function Router({ children, createHistory }) {
   }
   let { current: history } = useLazyRef(createHistory)
   let [location, setLocation] = useState(history.location)
+  let [startTransition, isPending] = useTransition({ timeoutMs })
 
   let { current: listener } = useClientSideRef(() => {
     return history.listen(location => {
-      setLocation(location)
+      startTransition(() => {
+        setLocation(location)
+      })
     })
   })
 
@@ -44,8 +79,9 @@ export function Router({ children, createHistory }) {
     () => ({
       history,
       location,
+      isPending,
     }),
-    [location],
+    [location, isPending],
   )
 
   return (
@@ -53,6 +89,37 @@ export function Router({ children, createHistory }) {
       {children}
     </historyContext.Provider>
   )
+}
+
+export function Switch({ children, matcher = defaultPathMatcher } = {}) {
+  let history = useHistory()
+  if (history.location === null) {
+    throw new Error(`Rendered a <Switch> component out of the context of a <Router> component.
+
+Ensure the <Switch> is rendered as a child of the <Router>.`)
+  }
+
+  let { location } = history
+
+  let element, match
+
+  // We use React.Children.forEach instead of React.Children.toArray().find()
+  // here because toArray adds keys to all child elements and we do not want
+  // to trigger an unmount/remount for two <Route>s that render the same
+  // component at different URLs.
+  Children.forEach(children, child => {
+    if (!match && isValidElement(child)) {
+      element = child
+
+      const path = child.props.path
+
+      if (typeof path === 'string') {
+        match = matcher(path, location)
+      }
+    }
+  })
+
+  return match ? element : null
 }
 
 export function useHistory() {
@@ -83,6 +150,7 @@ Check to ensure the link is rendered within a Router.`)
       ...props,
       href: path,
       role: props.disabled ? 'presentation' : 'anchor',
+      'aria-disabled': props.disabled ? 'true' : null,
       onClick: handler,
       onKeyDown: keyDown(handler),
       onKeyUp: keyUp(handler),

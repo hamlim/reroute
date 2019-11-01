@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, cleanup, fireEvent } from '@testing-library/react'
 
-import { useHistory, useLink, useRoute, Router } from '../mod.js'
+import { useHistory, useLink, useRoute, Router, Switch } from '../mod.js'
 import { createMemoryHistory } from 'history'
 
 afterEach(cleanup)
@@ -174,4 +174,41 @@ test('link still calls the handler even if disabled', () => {
   let anchor = container.querySelector('a')
   fireEvent.click(anchor)
   expect(clickHandler).toHaveBeenCalled()
+})
+
+test('switch renders the matching route', () => {
+  function Route({ children }) {
+    return children()
+  }
+  let { queryByText } = render(
+    <Router
+      createHistory={() =>
+        createMemoryHistory({
+          initialEntries: ['/foo'],
+        })
+      }
+    >
+      <Switch>
+        <Route path="/foo">{() => <p>Foo</p>}</Route>
+        <Route path="/bar">{() => <p>Bar</p>}</Route>
+        <Route path="/baz">{() => <p>Baz</p>}</Route>
+        <Route path="/fizz">{() => <p>Fizz</p>}</Route>
+      </Switch>
+    </Router>,
+  )
+
+  expect(queryByText(/Foo/)).not.toBe(null)
+  expect(queryByText(/Bar/)).toBe(null)
+  expect(queryByText(/Baz/)).toBe(null)
+  expect(queryByText(/Fizz/)).toBe(null)
+})
+
+test('Switch throws when not rendered in a Router', () => {
+  pauseErrorLogging(() =>
+    expect(() => render(<Switch />)).toThrowErrorMatchingInlineSnapshot(`
+"Rendered a <Switch> component out of the context of a <Router> component.
+
+Ensure the <Switch> is rendered as a child of the <Router>."
+`),
+  )
 })

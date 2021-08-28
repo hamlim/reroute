@@ -27,7 +27,11 @@
     "react": "*"
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "testPathIgnorePatterns": [
+      "<rootDir>/dist/",
+      "<rootDir>/node_modules/"
+    ]
   },
   "scripts": {
     "build": "babel src/ --out-dir dist/ --ignore=__tests__",

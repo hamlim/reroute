@@ -1,10 +1,9 @@
 import React from 'react'
-import { render, cleanup, fireEvent } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 
 import { useHistory, useLink, useRoute, Router, Switch } from '../mod.js'
 import { createMemoryHistory } from 'history'
 
-afterEach(cleanup)
 
 test('it gives you the history', () => {
   let hist

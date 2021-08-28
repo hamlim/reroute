@@ -38,11 +38,11 @@ if (typeof useReactTransition === 'function') {
     }, [val])
 
     return [
+      val === 1,
       cb => {
         setIsDone(1)
         callback.current = cb
       },
-      val === 1,
     ]
   }
 }
@@ -57,7 +57,7 @@ export function Router({ children, createHistory, timeoutMs = 2000 }) {
   }
   let { current: history } = useLazyRef(createHistory)
   let [location, setLocation] = useState(history.location)
-  let [startTransition, isPending] = useTransition({ timeoutMs })
+  let [isPending, startTransition] = useTransition({ timeoutMs })
 
   let { current: listener } = useClientSideRef(() => {
     return history.listen(location => {

@@ -8,27 +8,31 @@
   "license": "MIT",
   "source": "./src/mod.js",
   "devDependencies": {
-    "@babel/cli": "7.4.4",
-    "@babel/core": "7.4.5",
-    "@babel/plugin-proposal-object-rest-spread": "7.4.4",
-    "@babel/preset-env": "7.4.5",
+    "@babel/cli": "^7",
+    "@babel/core": "^7",
+    "@babel/plugin-proposal-object-rest-spread": "^7",
+    "@babel/preset-env": "^7",
     "@babel/preset-react": "7.0.0",
     "@reroute/core": "*",
-    "@testing-library/react": "8.0.1",
-    "history": "4.9.0",
-    "jest": "24.8.0",
-    "jest-dom": "3.4.0",
+    "@testing-library/react": "https://pkg.csb.dev/testing-library/react-testing-library/commit/0e2cf7da/@testing-library/react",
+    "history": "latest",
+    "jest": "latest",
+    "jest-dom": "latest",
     "microbundle": "0.11.0",
-    "react": "16.8.6",
-    "react-dom": "16.8.6"
+    "react": "experimental",
+    "react-dom": "experimental"
   },
   "peerDependencies": {
     "@reroute/core": "*",
-    "react": "16.8.3"
+    "react": "*"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "scripts": {
     "build": "babel src/ --out-dir dist/ --ignore=__tests__",
     "test": "jest",
+    "test-watch": "jest --watch",
     "bundle": "microbundle --jsx React.createElement"
   }
 }
